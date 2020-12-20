@@ -35,7 +35,7 @@ contract DatosDeportivos {
         liga = "Champions League";
     }
 
-    function createPost(string memory _e1,string memory _e2) public {
+    function createPost(string memory _e1,string memory _e2, uint lebron) public {
         require(bytes(_e1).length > 0);
         postCount ++;
         posts[postCount] = Post(postCount, _e1,_e2,0, msg.sender);

@@ -53,7 +53,7 @@ contract('DatosDeportivos', ([deployer, author, tipper]) => {
       assert.equal(post.id.toNumber(), postCount.toNumber(), 'id is correct')
       assert.equal(post.equipo1, 'Barca', 'e1 is correct')
       assert.equal(post.equipo2, 'Real', 'e2 amount is correct')
-      assert.equal(event.tip, '0', 'tip is correct')
+      assert.equal(post.tip, '0', 'tip is correct')
       assert.equal(post.author, author, 'author is correct')
     })
 
@@ -68,8 +68,8 @@ contract('DatosDeportivos', ([deployer, author, tipper]) => {
       // SUCESS
       const event = result.logs[0].args
       assert.equal(event.id.toNumber(), postCount.toNumber(), 'id is correct')
-      assert.equal(post.equipo1, 'Barca', 'e1 is correct')
-      assert.equal(post.equipo2, 'Real', 'e2 is correct')
+      assert.equal(event.equipo1, 'Barca', 'e1 is correct')
+      assert.equal(event.equipo2, 'Real', 'e2 is correct')
       assert.equal(event.tip, '1000000000000000000', 'tip is correct')
       assert.equal(event.author, author, 'author is correct')
 
