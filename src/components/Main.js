@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 
+
+
+
 class Main extends Component {
 
   render() {
@@ -9,6 +12,7 @@ class Main extends Component {
         <div className="row">
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '500px' }}>
             <div className="content mr-auto ml-auto">
+
               <p>&nbsp;</p>
                 <form onSubmit={(event) => {
                   event.preventDefault()

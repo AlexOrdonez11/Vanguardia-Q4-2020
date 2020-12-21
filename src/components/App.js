@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, InputHTMLAttributes } from 'react';
 import Web3 from 'web3';
 import Identicon from 'identicon.js';
 import './App.css';
 import DatosDeportivos from '../abis/DatosDeportivos.json'
 import Navbar from './Navbar'
-import Main from './Main'
-
-let fixtures=null
 
 class App extends Component {
 
@@ -67,13 +64,13 @@ class App extends Component {
   createPost() {
     this.setState({ loading: true })
     //this.state.data.forEach(element => {
-      //console.log(element.homeTeam.team_name);
-      //console.log(element.awayTeam.team_name);
-      this.state.datosDeportivos.methods.createPost(this.state.data[0].homeTeam.team_name , this.state.data[0].awayTeam.team_name).send({ from: this.state.account })
+    //console.log(element.homeTeam.team_name);
+    //console.log(element.awayTeam.team_name);
+    this.state.datosDeportivos.methods.createPost(this.state.data[0].homeTeam.team_name, this.state.data[0].awayTeam.team_name).send({ from: this.state.account })
       .once('receipt', (receipt) => {
         this.setState({ loading: false })
-      //})
-    });
+        //})
+      });
   }
 
   tipPost(id, monto) {
@@ -91,42 +88,57 @@ class App extends Component {
       datosDeportivos: null,
       postCont: 0,
       posts: [],
-      loading: false,
-      data:null,
+      loading: true,
+      data: null
     }
     this.createPost = this.createPost.bind(this)
     this.tipPost = this.tipPost.bind(this)
 
-    var request = require("request");
-
-    var options = {
-      method: 'GET',
-      url: 'https://v2.api-football.com/fixtures/league/2771/next/8',
-      headers: {
-        'x-rapidapi-host': 'v2.api-football.com',
-        'x-rapidapi-key': '87695023de3d9d0e098e04ffd4a32e3e'
-      }
-    };
-
-    request(options, (error, response, body) => {
-      if (error) throw new Error(error);
-      this.setState({data:JSON.parse(body).api.fixtures});
-    });
-  
   }
 
   render() {
+    var fixt = (JSON.parse(this.props.body).api.fixtures);
+    const fixtures = fixt.map((fix, i) => {
+      return (
+        <div className="col-md-6" key={i}>
+          <div style={{ margin: '30px 0px 0px 1px' }}>
+            <div class="card">
+              <center>
+                <img src={fix.homeTeam.logo} />  {fix.goalsHomeTeam}  VS  {fix.goalsAwayTeam}  <img src={fix.awayTeam.logo} />
+                <p>{fix.homeTeam.team_name}{"--"}{fix.awayTeam.team_name}</p>
+              </center>
+            </div>
+          </div>
+        </div>
+      )
+    });
     return (
       <div>
         <Navbar account={this.state.account} />
-        { this.state.loading
+        <div style={{ margin: '80px 0px 0px 0px' }}>
+            <center><h2>Ultima Ronda de Champions</h2></center>
+        </div>
+        <div className="container">
+          <div style={{ margin: '40px 0px 0px 30px' }}>
+            <center>
+            <div className="row mt-10">
+              <div className="col-md-12">
+                <div className="row">
+                  {fixtures}
+                </div>
+              </div>
+            </div>
+            </center>
+          </div>
+        </div>
+        {/* { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
           : <Main
             posts={this.state.posts}
             createPost={this.createPost}
             tipPost={this.tipPost}
           />
-        }
+        } */}
       </div>
     );
   }
